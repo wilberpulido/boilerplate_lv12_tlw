@@ -20,7 +20,9 @@
                 <div class="hidden sm:ml-10 sm:flex sm:space-x-8">
                     @foreach($menu as $item)
                         <a href="{{ $item['url'] }}"
-                            class="inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white hover:border-gray-300 dark:hover:border-slate-700' }}">
+                                class="inline-flex items-center px-1 pt-1 text-sm font-medium transition-colors duration-200 {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400' : 'text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white hover:border-gray-300 dark:hover:border-slate-700' }}"
+                                wire:navigate.hover
+                            >
                             {{ $item['label'] }}
                         </a>
                     @endforeach
@@ -71,7 +73,9 @@
         <div class="pt-2 pb-3 space-y-1 px-4">
             @foreach($menu as $item)
                 <a href="{{ $item['url'] }}"
-                   class="block py-2 text-base font-medium {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-slate-400' }}">
+                        class="block py-2 text-base font-medium {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-slate-400' }}"
+                        wire:navigate.hover
+                    >
                     {{ $item['label'] }}
                 </a>
             @endforeach

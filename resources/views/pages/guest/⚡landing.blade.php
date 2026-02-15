@@ -12,5 +12,7 @@ new class extends Component
     {{-- Hero --}}
     <x-marketing.hero />
     {{-- Features --}}
-    <x-marketing.features />
+    {{-- <x-marketing.features /> --}}
+    {{-- Pricing --}}
+    {{-- <x-marketing.pricing /> --}}
 </x-layouts.guest>

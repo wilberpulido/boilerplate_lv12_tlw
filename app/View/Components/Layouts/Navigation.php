@@ -13,9 +13,9 @@ class Navigation extends Component
     public function __construct()
     {
         $this->menu = [
-            ['label' => __('ui.navigation.home'), 'route' => 'home', 'url' => route('guest.landing'), 'active' => request()->routeIs('home')],
+            ['label' => __('ui.navigation.home'), 'route' => 'home', 'url' => route('guest.landing'), 'active' => request()->routeIs('guest.landing*')],
             ['label' => __('ui.navigation.features'), 'route' => 'features', 'url' => route('guest.landing'), 'active' => request()->routeIs('features')],
-            ['label' => __('ui.navigation.pricing'), 'route' => 'pricing', 'url' => route('guest.landing'), 'active' => request()->routeIs('pricing')],
+            ['label' => __('ui.navigation.pricing'), 'route' => 'pricing', 'url' => route('guest.pricing'), 'active' => request()->routeIs('guest.pricing*')],
         ];
     }
 
