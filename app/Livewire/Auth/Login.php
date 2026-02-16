@@ -11,8 +11,9 @@ class Login extends Component
 
     public function login()
     {
-        // dd($this->form->only(['email','password']));
-        $this->form->store();
+        $this->form->authenticate();
+
+        return redirect()->intended(route('dashboard'));
     }
 
     public function render()
