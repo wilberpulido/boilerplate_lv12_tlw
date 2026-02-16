@@ -11,5 +11,7 @@
         name="email"
         type="password"
     />
-    <button type="submit"> Enviar</button>
+    <button type="submit">
+        {{ __('ui.buttons.send') }}
+    </button>
 </form>
