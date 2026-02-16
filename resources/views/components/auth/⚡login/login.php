@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Livewire\Auth;
-
-use App\Livewire\Forms\auth\LoginForm;
 use Livewire\Component;
+use App\Livewire\Forms\auth\LoginForm;
+use Illuminate\Support\Facades\Log;
 
-class Login extends Component
+new class extends Component
 {
     public LoginForm $form;
 
     public function login()
     {
+        // throw new Exception('¡BOOM! Error forzado para pruebas.');
         $this->form->authenticate();
 
         return redirect()->intended(route('dashboard'));
@@ -18,6 +18,6 @@ class Login extends Component
 
     public function render()
     {
-        return view('livewire.auth.login');
+        return $this->view();
     }
-}
+};

@@ -11,6 +11,12 @@
         } else {
             document.documentElement.classList.remove('dark')
         }
+    function setupTheme() {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+    }
+    setupTheme();
+    document.addEventListener('livewire:navigated', setupTheme);
     </script>
 
     @livewireStyles

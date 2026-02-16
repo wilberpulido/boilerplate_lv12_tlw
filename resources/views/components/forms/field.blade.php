@@ -11,15 +11,9 @@
             {{$label}}
         </x-forms.label>
     @endif
-     {{-- wire:model.deep --}}
     <x-forms.input
         id="{{$name}}"
         {{ $attributes->whereStartsWith('wire:model') }}
-        {{-- :$type
-        :$name
-        :$placeholder
-        :$value
-        :$autocomplete --}}
         {{ $attributes->whereDoesntStartWith('class') }}
     />
     <x-forms.error

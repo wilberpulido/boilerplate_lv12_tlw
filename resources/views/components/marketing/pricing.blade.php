@@ -43,7 +43,8 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            @foreach(__('pricing.plans') as $key => $plan)
+            {{-- __('pricing.plans') --}}
+            @foreach( $plans as $key => $plan)
                 <div class="relative p-8 rounded-2xl border transition-all
                     {{ $plan['featured']
                         ? 'border-blue-500 ring-2 ring-blue-500/20 bg-blue-50/30 dark:bg-blue-900/10'

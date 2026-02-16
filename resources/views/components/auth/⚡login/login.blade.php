@@ -1,18 +1,19 @@
-<section id="test" class="relative min-h-screen flex items-center justify-center">
-    <form wire:submit.prevent="login"
-          {{-- min-h-screen en móvil para que sea TODO blanco, sm:min-h-0 para que sea card en PC --}}
-          class="w-full min-h-screen sm:min-h-0 sm:max-w-md bg-white p-6 sm:p-10 sm:rounded-3xl shadow-2xl flex flex-col justify-center space-y-6">
+<section id="login" class="relative min-h-screen flex items-center justify-center">
+    <form
+        wire:submit.prevent="login"
+        {{-- min-h-screen en móvil para que sea TODO blanco, sm:min-h-0 para que sea card en PC --}}
+        class="w-full min-h-screen sm:min-h-0 sm:max-w-md bg-white p-6 sm:p-10 sm:rounded-3xl shadow-2xl flex flex-col justify-center space-y-6">
 
         <div class="sm:hidden mb-4"> {{-- Logo solo visible en móvil arriba --}}
             {{-- <x-application-logo class="w-12 h-12 text-indigo-600" /> --}}
         </div>
 
         <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-            {{ __('ui.auth.login_title') }}
+            {{ __('ui.auth.login') }}
         </h2>
 
         {{-- Contenedores de Inputs --}}
-        <div class="space-y-4">
+        <div class="space-y-2">
             <x-forms.field
                 wire:model="form.email"
                 name="form.email"
@@ -46,7 +47,11 @@
             {{ __('ui.buttons.login') }}
         </button>
     </form>
-    {{-- @foreach ($errors->toArray() as $error)
-        @dump($error)
-    @endforeach --}}
 </section>
+@script
+    <script>
+        console.log('====================================');
+        console.log('aca si');
+        console.log('====================================');
+    </script>
+@endscript

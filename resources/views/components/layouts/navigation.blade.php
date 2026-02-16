@@ -33,10 +33,10 @@
                 <x-ui.theme-toggle />
                 @guest
                     <div class="flex items-center gap-x-6">
-                        <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">
+                        <x-ui.button wire:navigate.hover href="{{ route('login') }}" variant="ghost" size="sm">
                             {{ __('ui.auth.login') }}
                         </x-ui.button>
-                        <x-ui.button href="{{ route('register') }}" size="sm">
+                        <x-ui.button wire:navigate.hover href="{{ route('register') }}" size="sm">
                             {{ __('ui.auth.register') }}
                         </x-ui.button>
                     </div>

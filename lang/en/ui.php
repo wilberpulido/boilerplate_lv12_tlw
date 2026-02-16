@@ -2,9 +2,13 @@
 
 return [
     'auth' => [
+        'email' => 'Email',
+        'forgot_password' => 'Olvide mi contraseña',
         'login' => 'Log In',
         'logout' => 'Log Out',
+        'password' => 'Password',
         'register' => 'Get Started',
+        'remember_me' => 'Recuerdame',
     ],
     'buttons' => [
         'back' => 'Go Back',
@@ -13,6 +17,7 @@ return [
         'delete' => 'Delete',
         'edit' => 'Edit',
         'learn_more' => 'Learn More',
+        'login' => 'Login',
         'save' => 'Save Changes',
         'send' => 'Send',
     ],
