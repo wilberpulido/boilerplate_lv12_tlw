@@ -8,31 +8,34 @@ use Illuminate\Support\Facades\Log;
 
 class SortLangs extends Command
 {
-protected $signature = 'lang:sort {locale?}';
+    protected $signature = 'lang:sort {locale?}';
+
     protected $description = 'Ordena alfabéticamente los archivos de traducción sin romper nada';
 
-public function handle()
+    public function handle()
     {
         $localeArgument = $this->argument('locale');
         $langPath = base_path('lang');
 
         // Validamos que la carpeta raíz /lang exista
-        if (!File::exists($langPath)) {
+        if (! File::exists($langPath)) {
             $this->error("La carpeta raíz no existe en: {$langPath}");
+
             return self::FAILURE;
         }
 
         // 1. Obtener la lista de carpetas (idiomas)
         if ($localeArgument) {
-            $directories = [ $langPath . DIRECTORY_SEPARATOR . $localeArgument ];
+            $directories = [$langPath.DIRECTORY_SEPARATOR.$localeArgument];
         } else {
             // Esto agarra absolutamente TODAS las subcarpetas de /lang
-            $directories = glob($langPath . '/*', GLOB_ONLYDIR);
+            $directories = glob($langPath.'/*', GLOB_ONLYDIR);
         }
-        Log::debug(var_export($directories,true));
+        Log::debug(var_export($directories, true));
 
         if (empty($directories)) {
             $this->warn("No se encontraron carpetas de idiomas en {$langPath}");
+
             return self::SUCCESS;
         }
 
@@ -43,7 +46,9 @@ public function handle()
             // 1. Procesar archivos PHP dentro de la carpeta (ej: lang/es/pricing.php)
             $phpFiles = File::files($directory);
             foreach ($phpFiles as $file) {
-                if ($file->getExtension() !== 'php') continue;
+                if ($file->getExtension() !== 'php') {
+                    continue;
+                }
                 $this->processPhpFile($file);
             }
         }
@@ -51,20 +56,24 @@ public function handle()
         // 2. Procesar archivos JSON en la raíz de /lang (ej: lang/es.json)
         $jsonFiles = File::files($langPath);
         foreach ($jsonFiles as $file) {
-            if ($file->getExtension() !== 'json') continue;
+            if ($file->getExtension() !== 'json') {
+                continue;
+            }
             $this->processJsonFile($file);
         }
 
         $this->newLine();
         $this->info('🚀 ¡Todos los idiomas han sido ordenados!');
+
         return self::SUCCESS;
     }
+
     private function processPhpFile($file)
     {
         $translations = require $file->getRealPath();
         if (is_array($translations)) {
             $translations = $this->sortRecursive($translations);
-            $content = "<?php\n\nreturn " . $this->renderArray($translations) . ";\n";
+            $content = "<?php\n\nreturn ".$this->renderArray($translations).";\n";
             File::put($file->getRealPath(), $content);
             $this->info("  ✅ PHP: {$file->getFilename()}");
         }
@@ -100,9 +109,9 @@ public function handle()
             }
 
             if (is_array($value)) {
-                $output .= $this->renderArray($value, $indent + 1) . ",\n";
+                $output .= $this->renderArray($value, $indent + 1).",\n";
             } elseif (is_bool($value)) {
-                $output .= ($value ? 'true' : 'false') . ",\n";
+                $output .= ($value ? 'true' : 'false').",\n";
             } elseif (is_numeric($value)) {
                 $output .= "{$value},\n";
             } else {
@@ -112,7 +121,7 @@ public function handle()
             }
         }
 
-        return $output . $spacer . "]";
+        return $output.$spacer.']';
     }
 
     /**
@@ -126,6 +135,7 @@ public function handle()
                 $value = $this->sortRecursive($value);
             }
         }
+
         return $array;
     }
 }
