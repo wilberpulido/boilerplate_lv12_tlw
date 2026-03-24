@@ -13,10 +13,13 @@
         "laravel/fortify": "^1.32",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "livewire/livewire": "^4.0"
+        "livewire/livewire": "^4.0",
+        "spatie/laravel-activitylog": "^4.12",
+        "spatie/laravel-permission": "^7.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "fruitcake/laravel-debugbar": "^4.1",
         "laravel-lang/common": "^6.7",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -82,6 +85,7 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
+        "platform-check": false,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true

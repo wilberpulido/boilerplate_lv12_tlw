@@ -26,6 +26,11 @@
     <div class="min-h-screen">
         <x-layouts.navigation />
             <main id="guest-container" class="mx-auto flex flex-col">
+                @if (session('status'))
+                    <div class="max-w-md mx-auto w-full px-4 pt-4">
+                        <x-ui.alert type="info">{{ session('status') }}</x-ui.alert>
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         <x-layouts.footer />

@@ -12,11 +12,12 @@
 
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    <a href="/" class="font-bold text-xl tracking-tighter text-indigo-600 dark:text-indigo-400">
+                    <a href="{{ auth()->check() ? route('dashboard') : '/' }}" class="font-bold text-xl tracking-tighter text-indigo-600 dark:text-indigo-400" wire:navigate>
                         TU<span class="text-slate-900 dark:text-white">LOGO</span>
                     </a>
                 </div>
 
+                @guest
                 <div class="hidden sm:ml-10 sm:flex sm:space-x-8">
                     @foreach($menu as $item)
                         <a href="{{ $item['url'] }}"
@@ -27,6 +28,7 @@
                         </a>
                     @endforeach
                 </div>
+                @endguest
             </div>
 
             <div class="hidden sm:ml-6 sm:flex sm:items-center gap-x-4">
@@ -43,11 +45,40 @@
                 @endguest
 
                 @auth
-                    <div class="flex items-center gap-4">
-                        <span class="text-sm text-gray-600 dark:text-slate-400 italic">Hola, {{ auth()->user()->name }}</span>
-                        <x-ui.button href="{{ route('dashboard') }}" variant="secondary" size="sm">
-                            {{ __('ui.nav.dashboard') }}
-                        </x-ui.button>
+                    <div class="relative" x-data="{ dropdownOpen: false }">
+                        <button @click="dropdownOpen = !dropdownOpen" @click.outside="dropdownOpen = false"
+                            class="flex items-center gap-x-2 text-sm text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            {{ auth()->user()->name }}
+                            @php $role = auth()->user()->roles->first() @endphp
+                            @if ($role)
+                                <x-ui.badge :color="match($role->name) { 'super-admin' => 'indigo', 'admin' => 'blue', default => 'gray' }">
+                                    {{ $role->name }}
+                                </x-ui.badge>
+                            @endif
+                            <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': dropdownOpen }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="dropdownOpen" x-cloak
+                            x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg shadow-lg py-1 z-50">
+                            <a href="{{ route('profile') }}" wire:navigate
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                                {{ __('ui.auth.profile') }}
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                                    {{ __('ui.auth.logout') }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @endauth
             </div>
@@ -71,21 +102,35 @@
         x-transition:enter-end="opacity-100 translate-y-0"
         class="sm:hidden bg-white dark:bg-slate-950 border-b border-gray-100 dark:border-slate-800">
         <div class="pt-2 pb-3 space-y-1 px-4">
-            @foreach($menu as $item)
-                <a href="{{ $item['url'] }}"
-                        class="block py-2 text-base font-medium {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-slate-400' }}"
-                        wire:navigate.hover
-                    >
-                    {{ $item['label'] }}
-                </a>
-            @endforeach
-            <hr class="my-2 border-gray-100 dark:border-slate-800">
             @guest
+                @foreach($menu as $item)
+                    <a href="{{ $item['url'] }}"
+                            class="block py-2 text-base font-medium {{ $item['active'] ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-slate-400' }}"
+                            wire:navigate.hover
+                        >
+                        {{ $item['label'] }}
+                    </a>
+                @endforeach
+                <hr class="my-2 border-gray-100 dark:border-slate-800">
                 <div class="flex flex-col gap-y-2 pb-2">
-                    <x-ui.button href="{{ route('login') }}" variant="ghost" class="justify-start">Log in</x-ui.button>
-                    <x-ui.button href="{{ route('register') }}" class="w-full">Sign up</x-ui.button>
+                    <x-ui.button href="{{ route('login') }}" variant="ghost" class="justify-start">{{ __('ui.auth.login') }}</x-ui.button>
+                    <x-ui.button href="{{ route('register') }}" class="w-full">{{ __('ui.auth.register') }}</x-ui.button>
                 </div>
             @endguest
+
+            @auth
+                <p class="py-2 text-sm font-medium text-gray-700 dark:text-slate-300">{{ auth()->user()->name }}</p>
+                <hr class="my-2 border-gray-100 dark:border-slate-800">
+                <a href="#" class="block py-2 text-base font-medium text-gray-500 dark:text-slate-400" wire:navigate>
+                    {{ __('ui.auth.profile') }}
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="block w-full text-left py-2 text-base font-medium text-gray-500 dark:text-slate-400">
+                        {{ __('ui.auth.logout') }}
+                    </button>
+                </form>
+            @endauth
         </div>
     </div>
 </nav>

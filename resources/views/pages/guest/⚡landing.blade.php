@@ -4,7 +4,12 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public function mount()
+    {
+        if (auth()->check()) {
+            return $this->redirect(route('dashboard'), navigate: true);
+        }
+    }
 };
 ?>
 

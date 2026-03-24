@@ -1,4 +1,4 @@
 <x-layouts.guest>
     <x-ui.background-blobs />
-    <x-auth.register />
+    <x-auth.reset-password />
 </x-layouts.guest>
